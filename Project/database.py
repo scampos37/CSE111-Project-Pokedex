@@ -69,6 +69,77 @@ def createTable(conn):
 
     print("--------------------------------------------")
 
+def createPokeGenTable(conn):
+    print("--------------------------------------------")
+    print("Create table")
+
+    try:
+        sql = """CREATE TABLE pokeGeneration ()"""
+
+        conn.execute(sql)
+
+        conn.commit()
+        print("success")
+    except Error as e:
+        conn.rollback()
+        print(e)
+        
+
+    print("--------------------------------------------")
+
+def createPokeMovesSetTable(conn):
+    print("--------------------------------------------")
+    print("Create table")
+
+    try:
+        sql = """CREATE TABLE PokeMovesSet ()"""
+
+        conn.execute(sql)
+
+        conn.commit()
+        print("success")
+    except Error as e:
+        conn.rollback()
+        print(e)
+        
+
+    print("--------------------------------------------")   
+
+def createPokeMovesTable(conn):
+    print("--------------------------------------------")
+    print("Create table")
+
+    try:
+        sql = """CREATE TABLE Moves ()"""
+
+        conn.execute(sql)
+
+        conn.commit()
+        print("success")
+    except Error as e:
+        conn.rollback()
+        print(e)
+        
+
+    print("--------------------------------------------")
+
+def createPokemonTable(conn):
+    print("--------------------------------------------")
+    print("Create table")
+
+    try:
+        sql = """CREATE TABLE Pokemon ()"""
+
+        conn.execute(sql)
+
+        conn.commit()
+        print("success")
+    except Error as e:
+        conn.rollback()
+        print(e)
+        
+
+    print("--------------------------------------------") 
 
 def main():
         database = r"pokedex.sqlite"
@@ -78,6 +149,10 @@ def main():
         with conn:
             dropTable(conn)
             createTable(conn)
+            createPokeGenTable(conn)
+            createPokeMovesSetTable(conn)
+            createPokeMovesTable(conn)
+            createPokemonTable(conn)
             
             #nothing here yet
 
