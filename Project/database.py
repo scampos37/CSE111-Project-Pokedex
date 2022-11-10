@@ -40,7 +40,7 @@ def dropTable(conn):
     print("Drop tables")
 
     try:
-        sql = "DROP TABLE warehouse"
+        sql = "DROP TABLE moveset"
         conn.execute(sql)
 
         conn.commit()
