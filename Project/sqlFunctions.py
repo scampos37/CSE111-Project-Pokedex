@@ -207,3 +207,23 @@ def deletePokemon(conn):
         conn.rollback()
         print(e)
     print("--------------------------------------------") 
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def updatePokemonName(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Updating a Pokemon's name from pokemon table by index_number")
+    iNum = input("Which index_number would you like to update from the Pokemon Table: ")
+    pName = input("What is the updated name you want for the Pokemon?: ")
+    try:
+        sql = """UPDATE pokemon
+                SET name = ?
+                WHERE index_number = ?"""
+        args = [pName, iNum]
+        conn.execute(sql, args)
+        conn.commit()
+        print("successfully updated " + iNum + " from Pokemon Table to " + pName)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------") 

@@ -163,7 +163,8 @@ def main():
             #sqlFunctions.pokeTypeSearch(conn)
             #sqlFunctions.pokeMovesSearch(conn)
             #sqlFunctions.insertPokemon(conn)
-            sqlFunctions.deletePokemon(conn)
+            #sqlFunctions.deletePokemon(conn)
+            #sqlFunctions.updatePokemonName(conn)
 
         closeConnection(conn, database)
 
