@@ -227,3 +227,70 @@ def updatePokemonName(conn):
         conn.rollback()
         print(e)
     print("--------------------------------------------") 
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def insertBaseStat(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Inserting new Pokemon's base stats")
+    iNum = input("What's the index number of the Pokemon: ")
+    pNum = input("What's the pokedex number of the Pokemon:")
+    hp = input("What's the base hp stat of the Pokemon: ")
+    attack = input("What's the base attack stat of the Pokemon: ")
+    defense = input("What's the base defense stat of the Pokemon: ")
+    sp_attack = input("What's the base special attack stat of the Pokemon: ")
+    sp_defense = input("What's the base special defense stat of the Pokemon: ")
+    speed = input("What's the base hp stat of the Pokemon: ")
+    try:
+        sql = """INSERT INTO baseStats VALUES(?, ?, ?, ?, ?, ?, ?, ?)"""
+        args = [iNum, pNum, hp, attack, defense, sp_attack, sp_defense, speed]
+        conn.execute(sql, args)
+        conn.commit()
+        print("successfully inserted " + iNum + " into the base stat table")
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------") 
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def deleteBaseStat(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Deleting Pokemon base stats from baseStats table by index_number")
+    iNum = input("Which index_number would you like to delete from the baseStats Table: ")
+    try:
+        sql = """DELETE FROM baseStats
+                WHERE index_number = ?"""
+        args = [iNum]
+        conn.execute(sql, args)
+        conn.commit()
+        print("successfully deleted " + iNum + " from baseStats Table")
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------") 
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def updateBaseStats(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Updating a Pokemon's base stats")
+    iNum = input("What's the index number of the Pokemon: ")
+    hp = input("What's the new base hp stat of the Pokemon: ")
+    attack = input("What's the new base attack stat of the Pokemon: ")
+    defense = input("What's the new base defense stat of the Pokemon: ")
+    sp_attack = input("What's the new base special attack stat of the Pokemon: ")
+    sp_defense = input("What's the new base special defense stat of the Pokemon: ")
+    speed = input("What's the new base hp stat of the Pokemon: ")
+    try:
+        sql = """UPDATE baseStats
+                SET hp = ?, attack = ?, defense = ?, sp_attack = ?, sp_defense = ?, speed = ?
+                WHERE index_number = ? """
+        args = [hp, attack, defense, sp_attack, sp_defense, speed, iNum]
+        conn.execute(sql, args)
+        conn.commit()
+        print("successfully updated the base stats of " + iNum + " in the base stat table")
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------") 

@@ -158,13 +158,16 @@ def main():
             #createPokemonTable(conn)
             #nothing here yet
             
-            #sqlFunctions.pokemonGenerationSearch(conn)
+            sqlFunctions.pokemonGenerationSearch(conn)
             #sqlFunctions.pokemonBaseStatsSpecific(conn)
             #sqlFunctions.pokeTypeSearch(conn)
             #sqlFunctions.pokeMovesSearch(conn)
             #sqlFunctions.insertPokemon(conn)
             #sqlFunctions.deletePokemon(conn)
             #sqlFunctions.updatePokemonName(conn)
+            #sqlFunctions.insertBaseStat(conn)
+            #sqlFunctions.deleteBaseStat(conn)
+            #sqlFunctions.updateBaseStats(conn)
 
         closeConnection(conn, database)
 
