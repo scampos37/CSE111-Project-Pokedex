@@ -456,3 +456,58 @@ def pokemonTypingResistances(conn):
     except Error as e:
         conn.rollback()
         print(e)
+
+#16/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def generationTypingsCount(conn):
+    print("--------------------------------------------")
+    genNum = input("Which generation do you wanna search: ")
+    typeNum = int(input("How many typings do you want to search for (1 or 2): "))
+    type1 = input("What's the primary typing: ")
+    if (typeNum == 2):
+        type2 = input("What's the secondary typing: ")
+    try:
+        if (typeNum == 1):
+            sql = """SELECT gen.generation, count(pokemon.pokedex_number), defense_type1
+                    FROM pokemon, typing, gen
+                    WHERE pokemon.type_1 = ?
+                        AND pokemon.type_2 = "" 
+                        AND pokemon.type_1 = typing.defense_type1
+                        AND pokemon.type_2 = typing.defense_type2
+                        AND gen.generation = ?
+                        AND gen.generation = pokemon.generation """
+            args = [type1, genNum]
+            cur = conn.cursor()
+            cur.execute(sql, args)
+            l = '{:<10} {:<20} {:<10}'.format("Generation","Number_Of_Pokemon", "Type")
+            print(l)
+            print("-------------------------------")
+
+            rows = cur.fetchall()
+            for row in rows:
+                l = '{:<10} {:<20} {:<10}'.format(row[0], row[1], row[2])
+                print(l)
+        if (typeNum == 2):
+            sql = """SELECT gen.generation, count(pokemon.pokedex_number), typing.defense_type1, typing.defense_type2
+                    FROM pokemon, typing, gen
+                    WHERE pokemon.type_1 = ?
+                        AND pokemon.type_2 = ? 
+                        AND pokemon.type_1 = typing.defense_type1
+                        AND pokemon.type_2 = typing.defense_type2
+                        AND gen.generation = ?
+                        AND gen.generation = pokemon.generation """
+            args = [type1, type2, genNum]
+            cur = conn.cursor()
+            cur.execute(sql, args)
+            l = '{:<10} {:<20} {:<10} {:<10}'.format("Generation", "Number_Of_Pokemon", "Type1", "Type2")
+            print(l)
+            print("-------------------------------")
+
+            rows = cur.fetchall()
+            for row in rows:
+                l = '{:<10} {:<20} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3])
+                print(l)
+
+    except Error as e:
+        conn.rollback()
+        print(e)

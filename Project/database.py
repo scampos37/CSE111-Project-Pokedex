@@ -172,7 +172,8 @@ def main():
             #sqlFunctions.deleteBaseStat(conn)
             #sqlFunctions.updateBaseStats(conn)
             #sqlFunctions.searchLegendaryStatus(conn)
-            sqlFunctions.pokemonTypingResistances(conn)
+            #sqlFunctions.pokemonTypingResistances(conn)
+            sqlFunctions.generationTypingsCount(conn)
 
         closeConnection(conn, database)
 
