@@ -124,31 +124,6 @@ def pokeTypeSearch(conn):
 
 #-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokemonGenerationSearch(conn):
-    print("--------------------------------------------")
-    genNum = input("What generation are you looking for: ")
-
-    try:
-        sql = """SELECT pokedex_number, name as pokemon_name, generation
-                FROM pokemon
-                WHERE generation = ?"""
-        args = [genNum]
-        cur = conn.cursor()
-        cur.execute(sql, args)
-        l = '{:<15} {:<25} {:<10}'.format("PokedexNumber", "PokemonName", "Generation")
-        print(l)
-        print("-------------------------------")
-        rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<25} {:<10}'.format(row[0], row[1], row[2])
-            print(l)
-    except Error as e:
-        conn.rollback()
-        print(e)
-    print("--------------------------------------------") 
-
-#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-
 def pokeMovesSearch(conn):
     print("--------------------------------------------")
     moveName = input("Enter name of move for a description of move: ")
