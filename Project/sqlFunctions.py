@@ -118,3 +118,83 @@ def pokeTypeSearch(conn):
         except Error as e:
             conn.rollback()
             print(e)
+
+def pokemonGenerationSearch(conn):
+    print("--------------------------------------------")
+    genNum = input("What generation are you looking for: ")
+
+    try:
+        sql = """SELECT pokedex_number, name as pokemon_name, generation
+                FROM pokemon
+                WHERE generation = ?"""
+        args = [genNum]
+        cur = conn.cursor()
+        cur.execute(sql, args)
+        l = '{:<15} {:<25} {:<10}'.format("PokedexNumber", "PokemonName", "Generation")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<25} {:<10}'.format(row[0], row[1], row[2])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------") 
+
+def insertPokemon(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Insert Pokemon")
+    iNum = input("What's the index number of your new Pokemon: ")
+    pNum = input("What's the pokedex number of your new Pokemon: ")
+    pName = input("What's the name of your new Pokemon: ")
+    gen = input("What's the generation number of your new Pokemon: ")
+    status = input("What's the legendary status of your new Pokemon: ")
+    typeNum = int(input("How many typings does your new Pokemon have: "))
+    type1 = input("What's the primary typing of your new Pokemon: ")
+    type2 = ""
+    if typeNum == 2:
+        type2 = input("What's the secondary typing of your new Pokemon: ")
+    height = input("What's the base height of your new Pokemon in meters: ")
+    weight = input("What's the base weight of your new Pokemon in kilograms: ")
+    abilityNum = int(input("How many abilities does your new Pokemon have: "))
+    ability1, ability2, abilityh = "", "", ""
+    if abilityNum == 1:
+        htrue = input("Is your ability a hidden ability? Y or N: ")
+        if htrue == "Y":
+            abilityh = input("What's your new Pokemon's hidden ability: ")
+        else:
+            ability1 = input("What's your new Pokemon's first ability: ")
+    elif abilityNum == 2:
+        ability1 = input("What's your new Pokemon's first ability: ")
+        abilityh = input("What's your new Pokemon's hidden ability: ")
+    elif abilityNum == 3:
+        ability1 = input("what's your new Pokemon's first ability: ")
+        ability2 = input("What's your new Pokemon's secondary ability: ")
+        abilityh = input("What's your new Pokemon's hidden ability: ")
+    try:
+        sql = "INSERT INTO pokemon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?)"
+        args = [iNum, pNum, pName, gen, status, typeNum, type1, type2, height, weight, abilityNum, ability1, ability2, abilityh]
+        conn.execute(sql, args)
+        conn.commit()
+        print("successfully inserted " + pName + " into the Pokemon table")
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("++++++++++++++++++++++++++++++++++")
+
+def deletePokemon(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Deleting Pokemon from pokemon table by index_number")
+    iNum = input("Which index_number would you like to delete from the Pokemon Table: ")
+    try:
+        sql = """DELETE FROM pokemon
+                WHERE index_number = ?"""
+        args = [iNum]
+        conn.execute(sql, args)
+        conn.commit()
+        print("successfully deleted " + iNum + " from Pokemon Table")
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------") 
