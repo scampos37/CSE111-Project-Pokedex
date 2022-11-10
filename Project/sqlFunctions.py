@@ -192,6 +192,93 @@ def insertPokemon(conn):
 
 #-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
+def pokeRegionSearch(conn):
+    print("--------------------------------------------")
+    regName = input("What region of pokemon are you looking for?: ")
+
+    
+
+    try:
+        sql = """SELECT region_name, pokemon.generation, name
+                FROM pokemon, gen
+                WHERE 
+                    pokemon.generation = gen.generation AND 
+                    region_name = ?"""
+        args = [regName]
+        cur = conn.cursor()
+        cur.execute(sql, args)
+        l = '{:<15} {:<10} {:<10}'.format("Region", "Generation", "Pokemon_name")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<10} {:<10}'.format(row[0], row[1], row[2])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------")
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def pokeHeight_WeightSearch(conn):
+    print("--------------------------------------------")
+    #heightNum, weightNum = float(input("Enter Height: ")), float(input("Enter Weight: "))
+
+    try:
+        sql = """SELECT pokedex_number, name, height_m, weight_kg
+                FROM pokemon
+                WHERE 
+                    height_m > 1 AND 
+                    weight_kg > 50"""
+        #args = [heightNum, weightNum]
+        cur = conn.cursor()
+        cur.execute(sql)
+        #cur.execute(sql, args)
+        l = '{:<15} {:<25} {:<10} {:<10}'.format("Pokedex_ID", "Pokemon_name", "Height", "Weight")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<25} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------")
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def pokeMovesetSearch(conn):
+    print("--------------------------------------------")
+    
+    try:
+        sql = """SELECT pokedex_number, name, move1, description
+                FROM pokemon, moveset, moves
+                WHERE 
+                    pokedex_number = ndex AND
+                    move1 LIKE '%Scratch' AND
+                    move = 'Scratch'
+
+                    """
+    
+        cur = conn.cursor()
+        cur.execute(sql)
+
+        l = '{:<15} {:<25} {:<20} {:<15}'.format("Pokedex_ID", "Pokemon_name", "move1", "Description")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<25} {:<20} {:<15}'.format(row[0], row[1], row[2], row[3])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------")
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
 def deletePokemon(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Deleting Pokemon from pokemon table by index_number")
@@ -294,3 +381,5 @@ def updateBaseStats(conn):
         conn.rollback()
         print(e)
     print("--------------------------------------------") 
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
