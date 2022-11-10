@@ -161,6 +161,7 @@ def main():
             #sqlFunctions.pokemonGenerationSearch(conn)
             #sqlFunctions.pokemonBaseStatsSpecific(conn)
             #sqlFunctions.pokeTypeSearch(conn)
+            #sqlFunctions.pokeMovesSearch(conn)
             #sqlFunctions.insertPokemon(conn)
             sqlFunctions.deletePokemon(conn)
 

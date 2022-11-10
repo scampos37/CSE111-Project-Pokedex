@@ -25,6 +25,8 @@ def pokemonGenerationSearch(conn):
         print(e)
     print("--------------------------------------------") 
 
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
 def pokemonBaseStatsSpecific(conn):
     print("--------------------------------------------")
     x = ""
@@ -65,6 +67,7 @@ def pokemonBaseStatsSpecific(conn):
         print(e)
     print("--------------------------------------------") 
 
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 def pokeTypeSearch(conn):
     print("--------------------------------------------")
@@ -119,6 +122,8 @@ def pokeTypeSearch(conn):
             conn.rollback()
             print(e)
 
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
 def pokemonGenerationSearch(conn):
     print("--------------------------------------------")
     genNum = input("What generation are you looking for: ")
@@ -141,6 +146,33 @@ def pokemonGenerationSearch(conn):
         conn.rollback()
         print(e)
     print("--------------------------------------------") 
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def pokeMovesSearch(conn):
+    print("--------------------------------------------")
+    moveName = input("Enter name of move for a description of move: ")
+
+    try:
+        sql = """SELECT id, move, description
+                FROM moves
+                WHERE move = ?"""
+        args = [moveName]
+        cur = conn.cursor()
+        cur.execute(sql, args)
+        l = '{:<15} {:<25} {:<10}'.format("ID", "Move", "Description")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<25} {:<10}'.format(row[0], row[1], row[2])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------")
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 def insertPokemon(conn):
     print("++++++++++++++++++++++++++++++++++")
@@ -182,6 +214,8 @@ def insertPokemon(conn):
         conn.rollback()
         print(e)
     print("++++++++++++++++++++++++++++++++++")
+
+#-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 def deletePokemon(conn):
     print("++++++++++++++++++++++++++++++++++")
