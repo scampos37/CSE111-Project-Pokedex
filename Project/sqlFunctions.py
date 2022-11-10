@@ -408,3 +408,51 @@ def searchLegendaryStatus(conn):
     print("--------------------------------------------")
 
 #15/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def pokemonTypingResistances(conn):
+    print("--------------------------------------------")
+    typeNum = int(input("Does your pokemon have one or two typings: "))
+    type1 = input("What's the primary typing: ")
+    if (typeNum == 2):
+        type2 = input("What's the secondary typing: ")
+    try:
+        if (typeNum == 1):
+            sql = """SELECT pokedex_number, name, type_1, normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy
+                    FROM pokemon, typing
+                    WHERE type_1 = ?
+                        AND type_2 = "" 
+                        AND type_1 = defense_type1
+                        AND type_2 = defense_type2 """
+            args = [type1]
+            cur = conn.cursor()
+            cur.execute(sql, args)
+            l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format("Pokedex_Number","Pokemon_Name", "Type", "normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy")
+            print(l)
+            print("-------------------------------")
+
+            rows = cur.fetchall()
+            for row in rows:
+                l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19], row[20])
+                print(l)
+        if (typeNum == 2):
+            sql = """SELECT pokedex_number, name, type_1, type_2, normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy
+                    FROM pokemon, typing
+                    WHERE type_1 = ?
+                        AND type_2 = ? 
+                        AND type_1 = defense_type1
+                        AND type_2 = defense_type2 """
+            args = [type1, type2]
+            cur = conn.cursor()
+            cur.execute(sql, args)
+            l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format("Pokedex_Number","Pokemon_Name", "Type1", "Type2", "normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy")
+            print(l)
+            print("-------------------------------")
+
+            rows = cur.fetchall()
+            for row in rows:
+                l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19], row[20], row[21])
+                print(l)
+
+    except Error as e:
+        conn.rollback()
+        print(e)

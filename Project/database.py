@@ -40,7 +40,7 @@ def dropTable(conn):
     print("Drop tables")
 
     try:
-        sql = "DROP TABLE moveset"
+        sql = "DROP TABLE typing"
         conn.execute(sql)
 
         conn.commit()
@@ -171,7 +171,8 @@ def main():
             #sqlFunctions.insertBaseStat(conn)
             #sqlFunctions.deleteBaseStat(conn)
             #sqlFunctions.updateBaseStats(conn)
-            sqlFunctions.searchLegendaryStatus(conn)
+            #sqlFunctions.searchLegendaryStatus(conn)
+            sqlFunctions.pokemonTypingResistances(conn)
 
         closeConnection(conn, database)
 
