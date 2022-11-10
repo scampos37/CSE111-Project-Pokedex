@@ -68,58 +68,51 @@ def pokemonBaseStatsSpecific(conn):
 
 def pokeTypeSearch(conn):
     print("--------------------------------------------")
-    typeNum = input("What how many typing does the pokemon you are looking for have?: ")
+    typeNum = int(input("What how many typings does the pokemon you are looking for have?: "))
 
-
-    if typeNum == 1:
+    if (typeNum == 1):
         typeName = input("What poke type are you looking for?: ")
         try:
-            sql = """SELECT name as poke_name, type_1, hp, attack, defense, speed
-                    FROM pokemon, baseStats
-                    WHERE
-                        pokemon.index_number = baseStats.index_number AND
-                        pokemon.pokedex_number = baseStats.poke AND
-                        type_1 = ?"""
+            sql = """SELECT pokedex_number, name, type_1
+                    FROM pokemon
+                    WHERE type_1 = ?"""
             args = [typeName]
             cur = conn.cursor()
             cur.execute(sql, args)
 
-            l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10}'.format("Pokemon_Name", "Type", "HP", "Attack", "Defense", "Speed")
+            l = '{:<10} {:<25} {:<10}'.format("Pokedex_Number","Pokemon_Name", "Type")
             print(l)
             print("-------------------------------")
 
             rows = cur.fetchall()
             for row in rows:
-                l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5])
+                l = '{:<10} {:<25} {:<10}'.format(row[0], row[1], row[2])
                 print(l)
 
         except Error as e:
             conn.rollback()
             print(e)
 
-    elif typeNum == 2:
+    elif (typeNum == 2):
          
-        typeName1, typeName2 = input("What poke type are you looking for?: ").split()
+        typeName1, typeName2 = input("What's the first typing: ") , input ("What's the second typing: ")
         try:
-            sql = """SELECT name as poke_name, type_1, hp, attack, defense, speed
-                    FROM pokemon, baseStats
-                    WHERE
-                        pokemon.index_number = baseStats.index_number AND
-                        pokemon.pokedex_number = baseStats.poke AND
-                        type_1 = ? AND
-                        type_2 = ?"""
+            sql = """SELECT pokedex_number, name, type_1, type_2
+                    FROM pokemon
+                    WHERE type_1 = ?
+                        AND type_2 = ?"""
                         
             args = [typeName1, typeName2]
             cur = conn.cursor()
             cur.execute(sql, args)
 
-            l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10}'.format("Pokemon_Name", "Type1", "Type2", "HP", "Attack", "Defense", "Speed")
+            l = '{:<15} {:<25} {:<10} {:<10}'.format("Pokedex_Number", "Pokemon_Name", "Type1", "Type2")
             print(l)
             print("-------------------------------")
 
             rows = cur.fetchall()
             for row in rows:
-                l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+                l = '{:<15} {:<25} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3])
                 print(l)
 
         except Error as e:
