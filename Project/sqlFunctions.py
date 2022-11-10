@@ -511,3 +511,57 @@ def generationTypingsCount(conn):
     except Error as e:
         conn.rollback()
         print(e)
+
+#17/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def updateMoveset(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Updating a Pokemon's moveset")
+    forme = input("Which Pokemon's moveset do you want to update: ")
+    moveNum = int(input("Which move number do you want to update do you want to update: "))
+    moveName = input("What's the name of the move: ")
+    try:
+        if (moveNum == 1):
+            sql = """UPDATE moveset
+                    SET move1 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 2):
+            sql = """UPDATE moveset
+                    SET move2 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 3):
+            sql = """UPDATE moveset
+                    SET move3 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 4):
+            sql = """UPDATE moveset
+                    SET move4 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 5):
+            sql = """UPDATE moveset
+                    SET move5 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 6):
+            sql = """UPDATE moveset
+                    SET move6 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 7):
+            sql = """UPDATE moveset
+                    SET move7 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 8):
+            sql = """UPDATE moveset
+                    SET move8 = ?
+                    WHERE forme = ? """
+        elif (moveNum == 9):
+            sql = """UPDATE moveset
+                    SET move9 = ?
+                    WHERE forme = ? """
+        args = [moveName, forme]
+        conn.execute(sql, args)
+        conn.commit()
+        print("successfully updated the moveset for " + forme + " in the moveset table")
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------") 
