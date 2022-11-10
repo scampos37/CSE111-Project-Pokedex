@@ -174,7 +174,8 @@ def main():
             #sqlFunctions.searchLegendaryStatus(conn)
             #sqlFunctions.pokemonTypingResistances(conn)
             #sqlFunctions.generationTypingsCount(conn)
-            sqlFunctions.updateMoveset(conn)
+            #sqlFunctions.updateMoveset(conn)
+            sqlFunctions.searchPokemonAbilities(conn)
 
         closeConnection(conn, database)
 

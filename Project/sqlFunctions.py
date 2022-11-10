@@ -565,3 +565,30 @@ def updateMoveset(conn):
         conn.rollback()
         print(e)
     print("--------------------------------------------") 
+
+#18/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def searchPokemonAbilities(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Search pokemon with a certain ability")
+    abName = input("Which ability are you looking for: ")
+    try:
+        sql = """SELECT pokedex_number, name, ability_1, ability_2, ability_hidden
+                    FROM pokemon
+                    WHERE ability_1 = ?
+                        OR ability_2 = ?
+                        OR ability_hidden = ?"""
+        args = [abName, abName, abName]
+        cur = conn.cursor()
+        cur.execute(sql, args)
+        l = '{:<15} {:<25} {:<15} {:<15} {:<15}'.format("Pokedex_Number", "Pokemon_Name", "Ability_1", "Ability_2", "Hidden_Ability")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<25} {:<15} {:<15} {:<15}'.format(row[0], row[1], row[2], row[3], row[4])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------")
