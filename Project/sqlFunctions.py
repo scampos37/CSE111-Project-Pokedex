@@ -592,3 +592,30 @@ def searchPokemonAbilities(conn):
         conn.rollback()
         print(e)
     print("--------------------------------------------")
+
+#19/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def searchPokemonMoveInMoveset(conn):
+    print("++++++++++++++++++++++++++++++++++")
+    print("Search pokemon with a certain starting move")
+    abName = input("Which move are you looking for: ")
+    try:
+        sql = """SELECT pokemon.pokedex_number, pokemon.name, move1, move2, move3, move4, move5, move6, move7, move8, move9
+                FROM moveset, pokemon
+                WHERE ? in (move1, move2, move3, move4, move5, move6, move7, move8, move9)
+                    AND moveset.ndex = pokemon.pokedex_number
+            """
+        args = [abName]
+        cur = conn.cursor()
+        cur.execute(sql, args)
+        l = '{:<15} {:<30} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}'.format("Pokedex_Number", "Pokemon_Name", "move1", "move2", "move3", "move4", "move5", "move6", "move7", "move8", "move9")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<30} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------")
