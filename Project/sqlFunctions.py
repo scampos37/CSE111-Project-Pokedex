@@ -619,3 +619,34 @@ def searchPokemonMoveInMoveset(conn):
         conn.rollback()
         print(e)
     print("--------------------------------------------")
+
+#20/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+def speedSearch(conn):
+    print("--------------------------------------------")
+    #status = input("")
+    try:
+        sql = """SELECT pokemon.index_number, name
+                FROM pokemon, gen, baseStats 
+                WHERE
+                    pokemon.generation = gen.generation AND
+                    region_name = 'Alola'
+                GROUP BY name
+                HAVING
+                    speed < 50
+                """
+        #args = [status]
+        cur = conn.cursor()
+        cur.execute(sql)
+        l = '{:<15} {:<25}'.format("ID_Number","Pokemon_Name")
+        print(l)
+        print("-------------------------------")
+        rows = cur.fetchall()
+        for row in rows:
+            l = '{:<15} {:<25}'.format(row[0], row[1])
+            print(l)
+    except Error as e:
+        conn.rollback()
+        print(e)
+    print("--------------------------------------------")
+
