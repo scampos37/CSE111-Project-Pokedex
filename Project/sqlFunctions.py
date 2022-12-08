@@ -2,12 +2,11 @@ from os import W_OK
 import sqlite3
 from sqlite3 import Error
 from tkinter import *
-from tkinter import ttk
-
 
 #1/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 def pokemonGenerationSearch(conn, my_tree, genNum):
     print("--------------------------------------------")
+    my_tree
     my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Generation")
     my_tree.column("#0", width=10)
     my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
@@ -31,7 +30,6 @@ def pokemonGenerationSearch(conn, my_tree, genNum):
         for row in rows: 
             my_tree.insert("", 'end', text="",
                values =(row[0],row[1],row[2]))
-        
     except Error as e:
         conn.rollback()
         print(e)

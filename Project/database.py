@@ -163,12 +163,18 @@ def main():
     clicked = StringVar()
     
     def process(event=None):
+        global my_tree
+        my_tree.destroy()
         content = e1.get() # get the contents of the entry widget
         print(content)
         print(clicked.get())
         if clicked.get() == questions[0]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             sqlFunctions.pokemonGenerationSearch(conn, my_tree, content)
         if clicked.get() == questions[1]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             x = content
             if (x == "name"):
                 pname = e2.get()
@@ -179,6 +185,8 @@ def main():
             print(vList)
             sqlFunctions.pokemonBaseStatsSpecific(conn, my_tree, vList)
         if clicked.get() == questions[2]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             x = content
             y = e2.get()
             vList = [x,y]
@@ -187,12 +195,20 @@ def main():
                 vList.append(z)
             sqlFunctions.pokeTypeSearch(conn, my_tree, vList)
         if clicked.get() == questions[3]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             sqlFunctions.pokeMovesSearch(conn, my_tree, content)
         if clicked.get() == questions[4]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             sqlFunctions.pokeRegionSearch(conn, my_tree, content)
         if clicked.get() == questions[5]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             sqlFunctions.searchLegendaryStatus(conn, my_tree, content)
         if clicked.get() == questions[6]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             x = content
             y = e2.get()
             vList = [x,y]
@@ -201,6 +217,8 @@ def main():
                 vList.append(z)
             sqlFunctions.pokemonTypingResistances(conn, my_tree, vList)
         if clicked.get() == questions[7]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             x = content
             y = e2.get()
             z = e3.get()
@@ -210,26 +228,29 @@ def main():
                 vList.append(w)
             sqlFunctions.generationTypingsCount(conn, my_tree, vList)
         if clicked.get() == questions[8]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             sqlFunctions.searchPokemonAbilities(conn, my_tree, content)
         if clicked.get() == questions[9]:
+            my_tree = ttk.Treeview(root)
+            my_tree.grid(row=9, column=0, columnspan=5)
             sqlFunctions.searchPokemonMoveInMoveset(conn, my_tree, content)
             
 
     def search(conn):
         global Q1, Q2, Q3, Q4
         global e1, e2, e3, e4
-        global my_tree
+        
         Q1.destroy(), Q2.destroy(), Q3.destroy(), Q4.destroy()
         e1.destroy(), e2.destroy(), e3.destroy(), e4.destroy()
-        my_tree.destroy()
-        my_tree = ttk.Treeview(root)
-        my_tree.grid(row=9, column=0, columnspan=5)
+
         cstring = str(clicked.get())
         e1 = Entry(root, width=50)
         e1.grid(row=2, column=0, columnspan=2)
         if cstring == questions[0]:
             Q1 = Label(root, text = "What generation are you looking for: ")
             Q1.grid(row=1,column=0, columnspan=5)
+            
             root.bind('<Return>', process)
             
         if cstring == questions[1]:
