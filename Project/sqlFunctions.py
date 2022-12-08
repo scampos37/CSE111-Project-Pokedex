@@ -778,13 +778,13 @@ def searchPokemonAbilities(conn, my_tree, e):
 
     my_tree['columns'] = ("Pokemon_Number", "Pokemon_Name", "Ability_1", "Ability_2", "Ability_Hidden")
     my_tree.column("#0", width=10)
-    my_tree.column("Pokemon_Number", anchor=CENTER, width=120)
-    my_tree.column("Pokemon_Name", anchor=W, width=120)
-    my_tree.column("Ability_1", anchor=W, width=120)
-    my_tree.column("Ability_2", anchor=W, width=120)
-    my_tree.column("Ability_Hidden", anchor=W, width=120)
+    my_tree.column("Pokemon_Number", anchor=CENTER, width=100)
+    my_tree.column("Pokemon_Name", anchor=W, width=130)
+    my_tree.column("Ability_1", anchor=W, width=130)
+    my_tree.column("Ability_2", anchor=W, width=130)
+    my_tree.column("Ability_Hidden", anchor=W, width=130)
 
-    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("#0", anchor=W)
     my_tree.heading("Pokemon_Number", text = "Pokemon_Number", anchor=W)
     my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
     my_tree.heading("Ability_1", text = "Ability_1", anchor=W)
@@ -806,7 +806,7 @@ def searchPokemonAbilities(conn, my_tree, e):
         rows = cur.fetchall()
         for row in rows: 
             my_tree.insert("", 'end', text="",
-                values =(row[0],row[1],row[2],row[3],row[5]))
+                values =(row[0],row[1],row[2],row[3],row[4]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -820,17 +820,17 @@ def searchPokemonMoveInMoveset(conn, my_tree, e):
 
     my_tree['columns'] = ("Pokemon_Number", "Pokemon_Name", "move1", "move2", "move3", "move4", "move5", "move6", "move7", "move8", "move9",)
     my_tree.column("#0", width=1)
-    my_tree.column("Pokemon_Number", anchor=CENTER, width=120)
+    my_tree.column("Pokemon_Number", anchor=CENTER, width=40)
     my_tree.column("Pokemon_Name", anchor=W, width=120)
-    my_tree.column("move1", anchor=W, width=60)
-    my_tree.column("move2", anchor=W, width=60)
-    my_tree.column("move3", anchor=W, width=60)
-    my_tree.column("move4", anchor=W, width=60)
-    my_tree.column("move5", anchor=W, width=60)
-    my_tree.column("move6", anchor=W, width=60)
-    my_tree.column("move7", anchor=W, width=60)
-    my_tree.column("move8", anchor=W, width=60)
-    my_tree.column("move9", anchor=W, width=60)
+    my_tree.column("move1", anchor=W, width=80)
+    my_tree.column("move2", anchor=W, width=80)
+    my_tree.column("move3", anchor=W, width=80)
+    my_tree.column("move4", anchor=W, width=80)
+    my_tree.column("move5", anchor=W, width=80)
+    my_tree.column("move6", anchor=W, width=80)
+    my_tree.column("move7", anchor=W, width=80)
+    my_tree.column("move8", anchor=W, width=80)
+    my_tree.column("move9", anchor=W, width=80)
    
 
     my_tree.heading("#0", text = "List", anchor=W)
