@@ -1,12 +1,11 @@
 from os import W_OK
 import sqlite3
 from sqlite3 import Error
+from tkinter import *
 
 #1/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-def pokemonGenerationSearch(conn):
+def pokemonGenerationSearch(conn, root, genNum):
     print("--------------------------------------------")
-    genNum = input("What generation are you looking for: ")
-
     try:
         sql = """SELECT pokedex_number, name as pokemon_name, generation
                 FROM pokemon
@@ -28,26 +27,20 @@ def pokemonGenerationSearch(conn):
 
 #2/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokemonBaseStatsSpecific(conn):
+def pokemonBaseStatsSpecific(conn, root, e):
     print("--------------------------------------------")
-    x = ""
-    while(x != "name" or x != "number"):
-        x = input("Search by Pokemon Name (name) or Pokedex Number (number)")
-        if (x == "name"):
-            pname = input("What's the pokemon's name: ")
-            break
-        elif(x == "number"):
-            pdnum = input("What's the pokemon's pokedex number: ")
-            break
+    x = e[0]
 
     try:
         if (x == "name") :
+            pname = e[1]
             sql = """SELECT pokemon.pokedex_number, name as pokemon_name, hp, attack, defense, sp_attack, sp_defense, speed, height_m, weight_kg
                     FROM pokemon, baseStats
                     WHERE pokemon_name = ?
                         AND pokemon.pokedex_number = baseStats.pokedex_number"""
             args = [pname]
         else:
+            pdnum = e[1]
             sql = """SELECT pokemon.pokedex_number, name as pokemon_name, hp, attack, defense, sp_attack, sp_defense, speed, height_m, weight_kg
                     FROM pokemon, baseStats
                     WHERE pokemon.pokedex_number = ?
@@ -70,12 +63,11 @@ def pokemonBaseStatsSpecific(conn):
 
 #3/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeTypeSearch(conn):
+def pokeTypeSearch(conn, root, e):
     print("--------------------------------------------")
-    typeNum = int(input("What how many typings does the pokemon you are looking for have?: "))
-
-    if (typeNum == 1):
-        typeName = input("What poke type are you looking for?: ")
+    print(e)
+    if (e[0] == "1"):
+        typeName = e[1]
         try:
             sql = """SELECT pokedex_number, name, type_1
                     FROM pokemon
@@ -97,9 +89,9 @@ def pokeTypeSearch(conn):
             conn.rollback()
             print(e)
 
-    elif (typeNum == 2):
+    elif (e[0] == "2"):
          
-        typeName1, typeName2 = input("What's the first typing: ") , input ("What's the second typing: ")
+        typeName1, typeName2 = e[1], e[2]
         try:
             sql = """SELECT pokedex_number, name, type_1, type_2
                     FROM pokemon
@@ -125,10 +117,9 @@ def pokeTypeSearch(conn):
 
 #4/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeMovesSearch(conn):
+def pokeMovesSearch(conn, root, e):
     print("--------------------------------------------")
-    moveName = input("Enter name of move for a description of move: ")
-
+    moveName = e
     try:
         sql = """SELECT id, move, description
                 FROM moves
@@ -150,7 +141,7 @@ def pokeMovesSearch(conn):
 
 #5/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def insertPokemon(conn):
+def insertPokemon(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
     print("Insert Pokemon")
     iNum = input("What's the index number of your new Pokemon: ")
@@ -193,12 +184,9 @@ def insertPokemon(conn):
 
 #6/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeRegionSearch(conn):
+def pokeRegionSearch(conn, root, e):
     print("--------------------------------------------")
-    regName = input("What region of pokemon are you looking for?: ")
-
-    
-
+    regName = e
     try:
         sql = """SELECT region_name, pokemon.generation, name
                 FROM pokemon, gen
@@ -222,7 +210,7 @@ def pokeRegionSearch(conn):
 
 #7/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeHeight_WeightSearch(conn):
+def pokeHeight_WeightSearch(conn, root, e):
     print("--------------------------------------------")
     #heightNum, weightNum = float(input("Enter Height: ")), float(input("Enter Weight: "))
 
@@ -250,7 +238,7 @@ def pokeHeight_WeightSearch(conn):
 
 #8/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeMovesetSearch(conn):
+def pokeMovesetSearch(conn, root, e):
     print("--------------------------------------------")
     
     try:
@@ -280,7 +268,7 @@ def pokeMovesetSearch(conn):
 
 #9/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def deletePokemon(conn):
+def deletePokemon(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
     print("Deleting Pokemon from pokemon table by index_number")
     iNum = input("Which index_number would you like to delete from the Pokemon Table: ")
@@ -298,7 +286,7 @@ def deletePokemon(conn):
 
 #10/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def updatePokemonName(conn):
+def updatePokemonName(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
     print("Updating a Pokemon's name from pokemon table by index_number")
     iNum = input("Which index_number would you like to update from the Pokemon Table: ")
@@ -318,7 +306,7 @@ def updatePokemonName(conn):
 
 #11/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def insertBaseStat(conn):
+def insertBaseStat(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
     print("Inserting new Pokemon's base stats")
     iNum = input("What's the index number of the Pokemon: ")
@@ -342,7 +330,7 @@ def insertBaseStat(conn):
 
 #12/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def deleteBaseStat(conn):
+def deleteBaseStat(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
     print("Deleting Pokemon base stats from baseStats table by index_number")
     iNum = input("Which index_number would you like to delete from the baseStats Table: ")
@@ -360,7 +348,7 @@ def deleteBaseStat(conn):
 
 #13/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def updateBaseStats(conn):
+def updateBaseStats(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
     print("Updating a Pokemon's base stats")
     iNum = input("What's the index number of the Pokemon: ")
@@ -385,9 +373,9 @@ def updateBaseStats(conn):
 
 #14/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def searchLegendaryStatus(conn):
+def searchLegendaryStatus(conn, root, e):
     print("--------------------------------------------")
-    status = input("What legendary status does your pokemon have: ")
+    status = e
     try:
         sql = """SELECT pokedex_number, name, status
                 FROM pokemon
@@ -409,14 +397,14 @@ def searchLegendaryStatus(conn):
 
 #15/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokemonTypingResistances(conn):
+def pokemonTypingResistances(conn, root, e):
     print("--------------------------------------------")
-    typeNum = int(input("Does your pokemon have one or two typings: "))
-    type1 = input("What's the primary typing: ")
-    if (typeNum == 2):
-        type2 = input("What's the secondary typing: ")
+    typeNum = e[0]
+    type1 = e[1]
+    if (typeNum == "2"):
+        type2 = e[2]
     try:
-        if (typeNum == 1):
+        if (typeNum == "1"):
             sql = """SELECT pokedex_number, name, type_1, normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy
                     FROM pokemon, typing
                     WHERE type_1 = ?
@@ -434,7 +422,7 @@ def pokemonTypingResistances(conn):
             for row in rows:
                 l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19], row[20])
                 print(l)
-        if (typeNum == 2):
+        if (typeNum == "2"):
             sql = """SELECT pokedex_number, name, type_1, type_2, normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy
                     FROM pokemon, typing
                     WHERE type_1 = ?
@@ -459,15 +447,15 @@ def pokemonTypingResistances(conn):
 
 #16/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def generationTypingsCount(conn):
+def generationTypingsCount(conn, root, e):
     print("--------------------------------------------")
-    genNum = input("Which generation do you wanna search: ")
-    typeNum = int(input("How many typings do you want to search for (1 or 2): "))
-    type1 = input("What's the primary typing: ")
-    if (typeNum == 2):
-        type2 = input("What's the secondary typing: ")
+    genNum = e[0]
+    typeNum = e[1]
+    type1 = e[2]
+    if (typeNum == "2"):
+        type2 = e[3]
     try:
-        if (typeNum == 1):
+        if (typeNum == "1"):
             sql = """SELECT gen.generation, count(pokemon.pokedex_number), defense_type1
                     FROM pokemon, typing, gen
                     WHERE pokemon.type_1 = ?
@@ -487,7 +475,7 @@ def generationTypingsCount(conn):
             for row in rows:
                 l = '{:<10} {:<20} {:<10}'.format(row[0], row[1], row[2])
                 print(l)
-        if (typeNum == 2):
+        if (typeNum == "2"):
             sql = """SELECT gen.generation, count(pokemon.pokedex_number), typing.defense_type1, typing.defense_type2
                     FROM pokemon, typing, gen
                     WHERE pokemon.type_1 = ?
@@ -514,7 +502,7 @@ def generationTypingsCount(conn):
 
 #17/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def updateMoveset(conn):
+def updateMoveset(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
     print("Updating a Pokemon's moveset")
     forme = input("Which Pokemon's moveset do you want to update: ")
@@ -568,10 +556,9 @@ def updateMoveset(conn):
 
 #18/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def searchPokemonAbilities(conn):
+def searchPokemonAbilities(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
-    print("Search pokemon with a certain ability")
-    abName = input("Which ability are you looking for: ")
+    abName = e
     try:
         sql = """SELECT pokedex_number, name, ability_1, ability_2, ability_hidden
                     FROM pokemon
@@ -595,10 +582,9 @@ def searchPokemonAbilities(conn):
 
 #19/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def searchPokemonMoveInMoveset(conn):
+def searchPokemonMoveInMoveset(conn, root, e):
     print("++++++++++++++++++++++++++++++++++")
-    print("Search pokemon with a certain starting move")
-    abName = input("Which move are you looking for: ")
+    abName = e
     try:
         sql = """SELECT pokemon.pokedex_number, pokemon.name, move1, move2, move3, move4, move5, move6, move7, move8, move9
                 FROM moveset, pokemon
@@ -622,7 +608,7 @@ def searchPokemonMoveInMoveset(conn):
 
 #20/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def speedSearch(conn):
+def speedSearch(conn, root, e):
     print("--------------------------------------------")
     #status = input("")
     try:
