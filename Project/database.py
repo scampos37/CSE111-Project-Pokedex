@@ -166,8 +166,31 @@ def main():
         global my_tree
         my_tree.destroy()
         content = e1.get() # get the contents of the entry widget
-        print(content)
-        print(clicked.get())
+        if content == "12345":
+            print("Password Correct")
+            ques = input("""Which command do you want to run
+            1.) Insert Pokemon
+            2.) Update Pokemon Name
+            3.) Delete Pokemon
+            4.) insert basestat
+            5.) delete basestat
+            6.) update basestats
+            7.) update moveset\n""")
+            if ques == "1":
+                sqlFunctions.insertPokemon(conn)
+            if ques == "2":
+                sqlFunctions.updatePokemonName(conn)
+            if ques == "3":
+                sqlFunctions.deletePokemon(conn)
+            if ques == "4":
+                sqlFunctions.insertBaseStat(conn)
+            if ques == "5":
+                sqlFunctions.deleteBaseStat(conn)
+            if ques == "6":
+                sqlFunctions.updateBaseStats(conn)
+            if ques == "7":
+                sqlFunctions.updateMoveset(conn)
+
         if clicked.get() == questions[0]:
             my_tree = ttk.Treeview(root)
             my_tree.grid(row=9, column=0, columnspan=5)

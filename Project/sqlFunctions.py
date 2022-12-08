@@ -202,7 +202,7 @@ def pokeMovesSearch(conn, my_tree, e):
 
 #5/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def insertPokemon(conn, root, e):
+def insertPokemon(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Insert Pokemon")
     iNum = input("What's the index number of your new Pokemon: ")
@@ -348,7 +348,7 @@ def pokeMovesetSearch(conn, my_tree, e):
 
 #9/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def deletePokemon(conn, root, e):
+def deletePokemon(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Deleting Pokemon from pokemon table by index_number")
     iNum = input("Which index_number would you like to delete from the Pokemon Table: ")
@@ -366,7 +366,7 @@ def deletePokemon(conn, root, e):
 
 #10/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def updatePokemonName(conn, root, e):
+def updatePokemonName(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Updating a Pokemon's name from pokemon table by index_number")
     iNum = input("Which index_number would you like to update from the Pokemon Table: ")
@@ -386,7 +386,7 @@ def updatePokemonName(conn, root, e):
 
 #11/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def insertBaseStat(conn, root, e):
+def insertBaseStat(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Inserting new Pokemon's base stats")
     iNum = input("What's the index number of the Pokemon: ")
@@ -410,7 +410,7 @@ def insertBaseStat(conn, root, e):
 
 #12/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def deleteBaseStat(conn, root, e):
+def deleteBaseStat(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Deleting Pokemon base stats from baseStats table by index_number")
     iNum = input("Which index_number would you like to delete from the baseStats Table: ")
@@ -428,7 +428,7 @@ def deleteBaseStat(conn, root, e):
 
 #13/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def updateBaseStats(conn, root, e):
+def updateBaseStats(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Updating a Pokemon's base stats")
     iNum = input("What's the index number of the Pokemon: ")
@@ -718,7 +718,7 @@ def generationTypingsCount(conn, my_tree, genNum):
 
 #17/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def updateMoveset(conn, root, e):
+def updateMoveset(conn):
     print("++++++++++++++++++++++++++++++++++")
     print("Updating a Pokemon's moveset")
     forme = input("Which Pokemon's moveset do you want to update: ")
