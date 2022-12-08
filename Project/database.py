@@ -3,6 +3,8 @@ import sqlite3
 from sqlite3 import Error
 import sqlFunctions
 
+from tkinter import *
+
 
 def openConnection(pokefile):
     print("--------------------------------------------")
@@ -144,7 +146,22 @@ def createPokemonTable(conn):
 
 
 
+
 def main():
+        root = Tk()
+        root.title('Pokedex - World of Pokemon')
+        root.geometry("400x400")
+
+
+        titleHeader = Text(root)
+        titleHeader.tag_configure("tag_name", justify='center')
+        titleHeader.insert("1.0", "Welcome to the Pokedex:")
+        titleHeader.tag_add("tag_name", "1.0", "end")
+        titleHeader.pack()
+
+        
+
+
         database = r"pokedex.sqlite"
 
         conn = openConnection(database)
@@ -181,6 +198,8 @@ def main():
             
 
         closeConnection(conn, database)
+
+        root.mainloop()
 
 
 
