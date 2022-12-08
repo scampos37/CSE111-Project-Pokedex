@@ -167,7 +167,7 @@ def main():
         print(content)
         print(clicked.get())
         if clicked.get() == questions[0]:
-            sqlFunctions.pokemonGenerationSearch(conn, root, my_tree, content)
+            sqlFunctions.pokemonGenerationSearch(conn, my_tree, content)
         if clicked.get() == questions[1]:
             x = content
             if (x == "name"):
@@ -177,7 +177,7 @@ def main():
                 pdnum = e2.get()
                 vList = [x,pdnum]
             print(vList)
-            sqlFunctions.pokemonBaseStatsSpecific(conn, root, vList)
+            sqlFunctions.pokemonBaseStatsSpecific(conn, my_tree, vList)
         if clicked.get() == questions[2]:
             x = content
             y = e2.get()
@@ -185,13 +185,13 @@ def main():
             if (x == "2"):
                 z = e3.get()
                 vList.append(z)
-            sqlFunctions.pokeTypeSearch(conn, root, vList)
+            sqlFunctions.pokeTypeSearch(conn, my_tree, vList)
         if clicked.get() == questions[3]:
-            sqlFunctions.pokeMovesSearch(conn, root, content)
+            sqlFunctions.pokeMovesSearch(conn, my_tree, content)
         if clicked.get() == questions[4]:
-            sqlFunctions.pokeRegionSearch(conn, root, content)
+            sqlFunctions.pokeRegionSearch(conn, my_tree, content)
         if clicked.get() == questions[5]:
-            sqlFunctions.searchLegendaryStatus(conn, root, content)
+            sqlFunctions.searchLegendaryStatus(conn, my_tree, content)
         if clicked.get() == questions[6]:
             x = content
             y = e2.get()
@@ -199,7 +199,7 @@ def main():
             if (x == "2"):
                 z = e3.get()
                 vList.append(z)
-            sqlFunctions.pokemonTypingResistances(conn, root, vList)
+            sqlFunctions.pokemonTypingResistances(conn, my_tree, vList)
         if clicked.get() == questions[7]:
             x = content
             y = e2.get()
@@ -208,11 +208,11 @@ def main():
             if (y == "2"):
                 w = e4.get()
                 vList.append(w)
-            sqlFunctions.generationTypingsCount(conn, root, vList)
+            sqlFunctions.generationTypingsCount(conn, my_tree, vList)
         if clicked.get() == questions[8]:
-            sqlFunctions.searchPokemonAbilities(conn, root, content)
+            sqlFunctions.searchPokemonAbilities(conn, my_tree, content)
         if clicked.get() == questions[9]:
-            sqlFunctions.searchPokemonMoveInMoveset(conn, root, content)
+            sqlFunctions.searchPokemonMoveInMoveset(conn, my_tree, content)
             
 
     def search(conn):

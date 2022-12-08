@@ -6,16 +6,16 @@ from tkinter import ttk
 
 
 #1/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-def pokemonGenerationSearch(conn, root, my_tree, genNum):
+def pokemonGenerationSearch(conn, my_tree, genNum):
     print("--------------------------------------------")
-    my_tree['columns'] = ("PokedexNumber", "PokemonName", "Generation")
+    my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Generation")
     my_tree.column("#0", width=10)
-    my_tree.column("PokedexNumber", anchor=CENTER, width=120)
-    my_tree.column("PokemonName", anchor=W, width=120)
+    my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
+    my_tree.column("Pokemon_Name", anchor=W, width=120)
     my_tree.column("Generation", anchor=W, width=120)
     my_tree.heading("#0", text = "List", anchor=W)
-    my_tree.heading("PokedexNumber", text = "PokedexNumber", anchor=W)
-    my_tree.heading("PokemonName", text = "PokemonName", anchor=W)
+    my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
+    my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
     my_tree.heading("Generation", text = "Generation", anchor=W)
 
     try:
@@ -25,8 +25,7 @@ def pokemonGenerationSearch(conn, root, my_tree, genNum):
         args = [genNum]
         cur = conn.cursor()
         cur.execute(sql, args)
-        # l = '{:<15} {:<25} {:<10}'.format("PokedexNumber", "PokemonName", "Generation")
-        # print(l)
+        
         print("-------------------------------")
         rows = cur.fetchall()
         for row in rows: 
@@ -40,9 +39,32 @@ def pokemonGenerationSearch(conn, root, my_tree, genNum):
 
 #2/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokemonBaseStatsSpecific(conn, root, e):
+def pokemonBaseStatsSpecific(conn, my_tree, e):
     print("--------------------------------------------")
     x = e[0]
+    my_tree['columns'] = ("PokedexNumber", "PokemonName", "HP", "Attack", "Defense", "SP_Attack", "SP_Defense", "Speed", "Height_m", "Weight_kg")
+    my_tree.column("#0", width=10)
+    my_tree.column("PokedexNumber", anchor=CENTER, width=120)
+    my_tree.column("PokemonName", anchor=W, width=120)
+    my_tree.column("HP", anchor=W, width=50)
+    my_tree.column("Attack", anchor=W, width=50)
+    my_tree.column("Defense", anchor=W, width=50)
+    my_tree.column("SP_Attack", anchor=W, width=50)
+    my_tree.column("SP_Defense", anchor=W, width=50)
+    my_tree.column("Speed", anchor=W, width=50)
+    my_tree.column("Height_m", anchor=W, width=50)
+    my_tree.column("Weight_kg", anchor=W, width=50)
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("PokedexNumber", text = "PokedexNumber", anchor=W)
+    my_tree.heading("PokemonName", text = "PokemonName", anchor=W)
+    my_tree.heading("HP", text = "HP", anchor=W)
+    my_tree.heading("Attack", text = "Attack", anchor=W)
+    my_tree.heading("Defense", text = "Defense", anchor=W)
+    my_tree.heading("SP_Attack", text = "SP_Attack", anchor=W)
+    my_tree.heading("SP_Defense", text = "SP_Defense", anchor=W)
+    my_tree.heading("Speed", text = "Speed", anchor=W)
+    my_tree.heading("Height_m", text = "Height_m", anchor=W)
+    my_tree.heading("Weight_kg", text = "Weight_kg", anchor=W)
 
     try:
         if (x == "name") :
@@ -62,13 +84,12 @@ def pokemonBaseStatsSpecific(conn, root, e):
         
         cur = conn.cursor()
         cur.execute(sql, args)
-        l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format("PokedexNumber", "PokemonName", "HP", "attack", "defense", "sp_attack", "sp_defense", "speed", "height (M)", "weight (kg)")
-        print(l)
         print("-------------------------------")
+
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+               values =(row[0],row[1],row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -76,11 +97,23 @@ def pokemonBaseStatsSpecific(conn, root, e):
 
 #3/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeTypeSearch(conn, root, e):
+def pokeTypeSearch(conn, my_tree, e):
     print("--------------------------------------------")
     print(e)
     if (e[0] == "1"):
         typeName = e[1]
+
+        my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Type_1")
+        my_tree.column("#0", width=10)
+        my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
+        my_tree.column("Pokemon_Name", anchor=W, width=120)
+        my_tree.column("Type_1", anchor=W, width=120)
+        my_tree.heading("#0", text = "List", anchor=W)
+        my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
+        my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+        my_tree.heading("Type_1", text = "Type_1", anchor=W)
+
+
         try:
             sql = """SELECT pokedex_number, name, type_1
                     FROM pokemon
@@ -89,14 +122,11 @@ def pokeTypeSearch(conn, root, e):
             cur = conn.cursor()
             cur.execute(sql, args)
 
-            l = '{:<10} {:<25} {:<10}'.format("Pokedex_Number","Pokemon_Name", "Type")
-            print(l)
             print("-------------------------------")
-
             rows = cur.fetchall()
-            for row in rows:
-                l = '{:<10} {:<25} {:<10}'.format(row[0], row[1], row[2])
-                print(l)
+            for row in rows: 
+                my_tree.insert("", 'end', text="",
+                    values =(row[0],row[1],row[2]))
 
         except Error as e:
             conn.rollback()
@@ -105,6 +135,20 @@ def pokeTypeSearch(conn, root, e):
     elif (e[0] == "2"):
          
         typeName1, typeName2 = e[1], e[2]
+
+        my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Type_1", "Type_2")
+        my_tree.column("#0", width=10)
+        my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
+        my_tree.column("Pokemon_Name", anchor=W, width=120)
+        my_tree.column("Type_1", anchor=W, width=120)
+        my_tree.column("Type_2", anchor=W, width=120)
+
+        my_tree.heading("#0", text = "List", anchor=W)
+        my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
+        my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+        my_tree.heading("Type_1", text = "Type_1", anchor=W)
+        my_tree.heading("Type_2", text = "Type_2", anchor=W)
+
         try:
             sql = """SELECT pokedex_number, name, type_1, type_2
                     FROM pokemon
@@ -115,14 +159,11 @@ def pokeTypeSearch(conn, root, e):
             cur = conn.cursor()
             cur.execute(sql, args)
 
-            l = '{:<15} {:<25} {:<10} {:<10}'.format("Pokedex_Number", "Pokemon_Name", "Type1", "Type2")
-            print(l)
             print("-------------------------------")
-
             rows = cur.fetchall()
-            for row in rows:
-                l = '{:<15} {:<25} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3])
-                print(l)
+            for row in rows: 
+                my_tree.insert("", 'end', text="",
+                    values =(row[0],row[1],row[2], row[3]))
 
         except Error as e:
             conn.rollback()
@@ -130,9 +171,19 @@ def pokeTypeSearch(conn, root, e):
 
 #4/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeMovesSearch(conn, root, e):
+def pokeMovesSearch(conn, my_tree, e):
     print("--------------------------------------------")
     moveName = e
+    my_tree['columns'] = ("Index_Number", "Move", "Description")
+    my_tree.column("#0", width=10)
+    my_tree.column("Index_Number", anchor=CENTER, width=120)
+    my_tree.column("Move", anchor=W, width=120)
+    my_tree.column("Description", anchor=W, width=120)
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Index_Number", text = "Index_Number", anchor=W)
+    my_tree.heading("Move", text = "Move", anchor=W)
+    my_tree.heading("Description", text = "Description", anchor=W)
+
     try:
         sql = """SELECT id, move, description
                 FROM moves
@@ -140,13 +191,12 @@ def pokeMovesSearch(conn, root, e):
         args = [moveName]
         cur = conn.cursor()
         cur.execute(sql, args)
-        l = '{:<15} {:<25} {:<10}'.format("ID", "Move", "Description")
-        print(l)
+
         print("-------------------------------")
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<25} {:<10}'.format(row[0], row[1], row[2])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+               values =(row[0],row[1],row[2]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -197,9 +247,19 @@ def insertPokemon(conn, root, e):
 
 #6/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeRegionSearch(conn, root, e):
+def pokeRegionSearch(conn, my_tree, e):
     print("--------------------------------------------")
     regName = e
+    my_tree['columns'] = ("Region_Name", "Generation", "Pokemon_Name")
+    my_tree.column("#0", width=10)
+    my_tree.column("Region_Name", anchor=CENTER, width=120)
+    my_tree.column("Generation", anchor=W, width=120)
+    my_tree.column("Pokemon_Name", anchor=W, width=120)
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Region_Name", text = "Region_Name", anchor=W)
+    my_tree.heading("Generation", text = "Generation", anchor=W)
+    my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+
     try:
         sql = """SELECT region_name, pokemon.generation, name
                 FROM pokemon, gen
@@ -209,13 +269,12 @@ def pokeRegionSearch(conn, root, e):
         args = [regName]
         cur = conn.cursor()
         cur.execute(sql, args)
-        l = '{:<15} {:<10} {:<10}'.format("Region", "Generation", "Pokemon_name")
-        print(l)
+        
         print("-------------------------------")
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<10} {:<10}'.format(row[0], row[1], row[2])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+               values =(row[0],row[1],row[2]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -223,9 +282,21 @@ def pokeRegionSearch(conn, root, e):
 
 #7/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeHeight_WeightSearch(conn, root, e):
+def pokeHeight_WeightSearch(conn, my_tree, e):
     print("--------------------------------------------")
     #heightNum, weightNum = float(input("Enter Height: ")), float(input("Enter Weight: "))
+    my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Height", "Weight")
+    my_tree.column("#0", width=10)
+    my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
+    my_tree.column("Pokemon_Name", anchor=W, width=120)
+    my_tree.column("Height", anchor=W, width=120)
+    my_tree.column("Weight", anchor=W, width=120)
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
+    my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+    my_tree.heading("Height", text = "Height", anchor=W)
+    my_tree.heading("Weight", text = "Weight", anchor=W)
+
 
     try:
         sql = """SELECT pokedex_number, name, height_m, weight_kg
@@ -236,14 +307,12 @@ def pokeHeight_WeightSearch(conn, root, e):
         #args = [heightNum, weightNum]
         cur = conn.cursor()
         cur.execute(sql)
-        #cur.execute(sql, args)
-        l = '{:<15} {:<25} {:<10} {:<10}'.format("Pokedex_ID", "Pokemon_name", "Height", "Weight")
-        print(l)
+       
         print("-------------------------------")
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<25} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+               values =(row[0],row[1],row[2], row[3]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -251,7 +320,7 @@ def pokeHeight_WeightSearch(conn, root, e):
 
 #8/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokeMovesetSearch(conn, root, e):
+def pokeMovesetSearch(conn, my_tree, e):
     print("--------------------------------------------")
     
     try:
@@ -386,9 +455,22 @@ def updateBaseStats(conn, root, e):
 
 #14/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def searchLegendaryStatus(conn, root, e):
+def searchLegendaryStatus(conn, my_tree, e):
     print("--------------------------------------------")
     status = e
+    my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Status")
+    my_tree.column("#0", width=10)
+    my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
+    my_tree.column("Pokemon_Name", anchor=W, width=120)
+    my_tree.column("Status", anchor=W, width=120)
+    
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
+    my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+    my_tree.heading("Status", text = "Status", anchor=W)
+   
+
+
     try:
         sql = """SELECT pokedex_number, name, status
                 FROM pokemon
@@ -396,13 +478,12 @@ def searchLegendaryStatus(conn, root, e):
         args = [status]
         cur = conn.cursor()
         cur.execute(sql, args)
-        l = '{:<15} {:<25} {:<10}'.format("Pokedex_Number", "Pokemon_Name", "Status")
-        print(l)
+        
         print("-------------------------------")
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<25} {:<10}'.format(row[0], row[1], row[2])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+               values =(row[0],row[1],row[2]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -410,12 +491,61 @@ def searchLegendaryStatus(conn, root, e):
 
 #15/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def pokemonTypingResistances(conn, root, e):
+def pokemonTypingResistances(conn, my_tree, e):
     print("--------------------------------------------")
     typeNum = e[0]
     type1 = e[1]
+
     if (typeNum == "2"):
         type2 = e[2]
+
+    my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Type_1", "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psyhic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy")
+    my_tree.column("#0", width=10)
+    my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
+    my_tree.column("Pokemon_Name", anchor=W, width=120)
+    my_tree.column("Type_1", anchor=W, width=10)
+    my_tree.column("Normal", anchor=W, width=10)
+    my_tree.column("Fire", anchor=W, width=10)
+    my_tree.column("Water", anchor=W, width=10)
+    my_tree.column("Electric", anchor=W, width=10)
+    my_tree.column("Grass", anchor=W, width=10)
+    my_tree.column("Ice", anchor=W, width=10)
+    my_tree.column("Fighting", anchor=W, width=10)
+    my_tree.column("Poison", anchor=W, width=10)
+    my_tree.column("Ground", anchor=W, width=10)
+    my_tree.column("Flying", anchor=W, width=10)
+    my_tree.column("Psyhic", anchor=W, width=10)
+    my_tree.column("Bug", anchor=W, width=10)
+    my_tree.column("Rock", anchor=W, width=10)
+    my_tree.column("Ghost", anchor=W, width=10)
+    my_tree.column("Dragon", anchor=W, width=10)
+    my_tree.column("Dark", anchor=W, width=10)
+    my_tree.column("Steel", anchor=W, width=10)
+    my_tree.column("Fairy", anchor=W, width=10)
+    
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
+    my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+    my_tree.heading("Type_1", text = "Type_1", anchor=W)
+    my_tree.heading("Normal", text = "Normal", anchor=W)
+    my_tree.heading("Fire", text = "Fire", anchor=W)
+    my_tree.heading("Water", text = "Water", anchor=W)
+    my_tree.heading("Electric", text = "Electric", anchor=W)
+    my_tree.heading("Grass", text = "Grass", anchor=W)
+    my_tree.heading("Ice", text = "Ice", anchor=W)
+    my_tree.heading("Fighting", text = "Fighting", anchor=W)
+    my_tree.heading("Poison", text = "Poison", anchor=W)
+    my_tree.heading("Ground", text = "Ground", anchor=W)
+    my_tree.heading("Flying", text = "Flying", anchor=W)
+    my_tree.heading("Psyhic", text = "Psyhic", anchor=W)
+    my_tree.heading("Bug", text = "Bug", anchor=W)
+    my_tree.heading("Rock", text = "Rock", anchor=W)
+    my_tree.heading("Ghost", text = "Ghost", anchor=W)
+    my_tree.heading("Dragon", text = "Dragon", anchor=W)
+    my_tree.heading("Dark", text = "Dark", anchor=W)
+    my_tree.heading("Steel", text = "Steel", anchor=W)
+    my_tree.heading("Fairy", text = "Fairy", anchor=W)
+
     try:
         if (typeNum == "1"):
             sql = """SELECT pokedex_number, name, type_1, normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy
@@ -427,15 +557,66 @@ def pokemonTypingResistances(conn, root, e):
             args = [type1]
             cur = conn.cursor()
             cur.execute(sql, args)
-            l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format("Pokedex_Number","Pokemon_Name", "Type", "normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy")
-            print(l)
+           
             print("-------------------------------")
 
             rows = cur.fetchall()
-            for row in rows:
-                l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19], row[20])
-                print(l)
+            for row in rows: 
+                my_tree.insert("", 'end', text="",
+                    values =(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11],row[12],row[13],row[14],row[15],row[16],row[17],row[18],row[19],row[20]))
         if (typeNum == "2"):
+
+
+            my_tree['columns'] = ("Pokedex_Number", "Pokemon_Name", "Type_1", "Type_2", "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psyhic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy")
+            my_tree.column("#0", width=10)
+            my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
+            my_tree.column("Pokemon_Name", anchor=W, width=120)
+            my_tree.column("Type_1", anchor=W, width=10)
+            my_tree.column("Type_2", anchor=W, width=10)
+            my_tree.column("Normal", anchor=W, width=10)
+            my_tree.column("Fire", anchor=W, width=10)
+            my_tree.column("Water", anchor=W, width=10)
+            my_tree.column("Electric", anchor=W, width=10)
+            my_tree.column("Grass", anchor=W, width=10)
+            my_tree.column("Ice", anchor=W, width=10)
+            my_tree.column("Fighting", anchor=W, width=10)
+            my_tree.column("Poison", anchor=W, width=10)
+            my_tree.column("Ground", anchor=W, width=10)
+            my_tree.column("Flying", anchor=W, width=10)
+            my_tree.column("Psyhic", anchor=W, width=10)
+            my_tree.column("Bug", anchor=W, width=10)
+            my_tree.column("Rock", anchor=W, width=10)
+            my_tree.column("Ghost", anchor=W, width=10)
+            my_tree.column("Dragon", anchor=W, width=10)
+            my_tree.column("Dark", anchor=W, width=10)
+            my_tree.column("Steel", anchor=W, width=10)
+            my_tree.column("Fairy", anchor=W, width=10)
+            
+            my_tree.heading("#0", text = "List", anchor=W)
+            my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
+            my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+            my_tree.heading("Type_1", text = "Type_1", anchor=W)
+            my_tree.heading("Type_2", text = "Type_2", anchor=W)
+            my_tree.heading("Normal", text = "Normal", anchor=W)
+            my_tree.heading("Fire", text = "Fire", anchor=W)
+            my_tree.heading("Water", text = "Water", anchor=W)
+            my_tree.heading("Electric", text = "Electric", anchor=W)
+            my_tree.heading("Grass", text = "Grass", anchor=W)
+            my_tree.heading("Ice", text = "Ice", anchor=W)
+            my_tree.heading("Fighting", text = "Fighting", anchor=W)
+            my_tree.heading("Poison", text = "Poison", anchor=W)
+            my_tree.heading("Ground", text = "Ground", anchor=W)
+            my_tree.heading("Flying", text = "Flying", anchor=W)
+            my_tree.heading("Psyhic", text = "Psyhic", anchor=W)
+            my_tree.heading("Bug", text = "Bug", anchor=W)
+            my_tree.heading("Rock", text = "Rock", anchor=W)
+            my_tree.heading("Ghost", text = "Ghost", anchor=W)
+            my_tree.heading("Dragon", text = "Dragon", anchor=W)
+            my_tree.heading("Dark", text = "Dark", anchor=W)
+            my_tree.heading("Steel", text = "Steel", anchor=W)
+            my_tree.heading("Fairy", text = "Fairy", anchor=W)
+
+
             sql = """SELECT pokedex_number, name, type_1, type_2, normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy
                     FROM pokemon, typing
                     WHERE type_1 = ?
@@ -445,14 +626,13 @@ def pokemonTypingResistances(conn, root, e):
             args = [type1, type2]
             cur = conn.cursor()
             cur.execute(sql, args)
-            l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format("Pokedex_Number","Pokemon_Name", "Type1", "Type2", "normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy")
-            print(l)
+           
             print("-------------------------------")
 
             rows = cur.fetchall()
-            for row in rows:
-                l = '{:<15} {:<25} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19], row[20], row[21])
-                print(l)
+            for row in rows: 
+                my_tree.insert("", 'end', text="",
+                    values =(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11],row[12],row[13],row[14],row[15],row[16],row[17],row[18],row[19],row[20],row[21]))
 
     except Error as e:
         conn.rollback()
@@ -460,13 +640,25 @@ def pokemonTypingResistances(conn, root, e):
 
 #16/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def generationTypingsCount(conn, root, e):
+def generationTypingsCount(conn, my_tree, genNum):
     print("--------------------------------------------")
     genNum = e[0]
     typeNum = e[1]
     type1 = e[2]
     if (typeNum == "2"):
         type2 = e[3]
+
+    my_tree['columns'] = ("Generation", "Type_Count", "Defense_Type1")
+    my_tree.column("#0", width=10)
+    my_tree.column("Generation", anchor=CENTER, width=120)
+    my_tree.column("Type_Count", anchor=W, width=120)
+    my_tree.column("Defense_Type1", anchor=W, width=120)
+
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Generation", text = "Generation", anchor=W)
+    my_tree.heading("Type_Count", text = "Type_Count", anchor=W)
+    my_tree.heading("Defense_Type1", text = "Defense_Type1", anchor=W)
+
     try:
         if (typeNum == "1"):
             sql = """SELECT gen.generation, count(pokemon.pokedex_number), defense_type1
@@ -480,15 +672,30 @@ def generationTypingsCount(conn, root, e):
             args = [type1, genNum]
             cur = conn.cursor()
             cur.execute(sql, args)
-            l = '{:<10} {:<20} {:<10}'.format("Generation","Number_Of_Pokemon", "Type")
-            print(l)
+            
             print("-------------------------------")
-
             rows = cur.fetchall()
-            for row in rows:
-                l = '{:<10} {:<20} {:<10}'.format(row[0], row[1], row[2])
-                print(l)
+            for row in rows: 
+                my_tree.insert("", 'end', text="",
+                    values =(row[0],row[1],row[2]))
+
+
         if (typeNum == "2"):
+
+            my_tree['columns'] = ("Generation", "Type_Count", "Defense_Type1", "Defense_Type2")
+            my_tree.column("#0", width=10)
+            my_tree.column("Generation", anchor=CENTER, width=120)
+            my_tree.column("Type_Count", anchor=W, width=120)
+            my_tree.column("Defense_Type1", anchor=W, width=120)
+            my_tree.column("Defense_Type2", anchor=W, width=120)
+
+            my_tree.heading("#0", text = "List", anchor=W)
+            my_tree.heading("Generation", text = "Generation", anchor=W)
+            my_tree.heading("Type_Count", text = "Type_Count", anchor=W)
+            my_tree.heading("Defense_Type1", text = "Defense_Type1", anchor=W)
+            my_tree.heading("Defense_Type2", text = "Defense_Type2", anchor=W)
+
+
             sql = """SELECT gen.generation, count(pokemon.pokedex_number), typing.defense_type1, typing.defense_type2
                     FROM pokemon, typing, gen
                     WHERE pokemon.type_1 = ?
@@ -500,14 +707,12 @@ def generationTypingsCount(conn, root, e):
             args = [type1, type2, genNum]
             cur = conn.cursor()
             cur.execute(sql, args)
-            l = '{:<10} {:<20} {:<10} {:<10}'.format("Generation", "Number_Of_Pokemon", "Type1", "Type2")
-            print(l)
-            print("-------------------------------")
 
+            print("-------------------------------")
             rows = cur.fetchall()
-            for row in rows:
-                l = '{:<10} {:<20} {:<10} {:<10}'.format(row[0], row[1], row[2], row[3])
-                print(l)
+            for row in rows: 
+                my_tree.insert("", 'end', text="",
+                    values =(row[0],row[1],row[2],row[3]))
 
     except Error as e:
         conn.rollback()
@@ -569,9 +774,26 @@ def updateMoveset(conn, root, e):
 
 #18/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def searchPokemonAbilities(conn, root, e):
+def searchPokemonAbilities(conn, my_tree, e):
     print("++++++++++++++++++++++++++++++++++")
     abName = e
+
+    my_tree['columns'] = ("Pokemon_Number", "Pokemon_Name", "Ability_1", "Ability_2", "Ability_Hidden")
+    my_tree.column("#0", width=10)
+    my_tree.column("Pokemon_Number", anchor=CENTER, width=120)
+    my_tree.column("Pokemon_Name", anchor=W, width=120)
+    my_tree.column("Ability_1", anchor=W, width=120)
+    my_tree.column("Ability_2", anchor=W, width=120)
+    my_tree.column("Ability_Hidden", anchor=W, width=120)
+
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Pokemon_Number", text = "Pokemon_Number", anchor=W)
+    my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+    my_tree.heading("Ability_1", text = "Ability_1", anchor=W)
+    my_tree.heading("Ability_2", text = "Ability_2", anchor=W)
+    my_tree.heading("Ability_Hidden", text = "Ability_Hidden", anchor=W)
+
+
     try:
         sql = """SELECT pokedex_number, name, ability_1, ability_2, ability_hidden
                     FROM pokemon
@@ -581,13 +803,12 @@ def searchPokemonAbilities(conn, root, e):
         args = [abName, abName, abName]
         cur = conn.cursor()
         cur.execute(sql, args)
-        l = '{:<15} {:<25} {:<15} {:<15} {:<15}'.format("Pokedex_Number", "Pokemon_Name", "Ability_1", "Ability_2", "Hidden_Ability")
-        print(l)
+        
         print("-------------------------------")
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<25} {:<15} {:<15} {:<15}'.format(row[0], row[1], row[2], row[3], row[4])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+                values =(row[0],row[1],row[2],row[3],row[5]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -595,9 +816,39 @@ def searchPokemonAbilities(conn, root, e):
 
 #19/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def searchPokemonMoveInMoveset(conn, root, e):
+def searchPokemonMoveInMoveset(conn, my_tree, e):
     print("++++++++++++++++++++++++++++++++++")
     abName = e
+
+    my_tree['columns'] = ("Pokemon_Number", "Pokemon_Name", "move1", "move2", "move3", "move4", "move5", "move6", "move7", "move8", "move9",)
+    my_tree.column("#0", width=1)
+    my_tree.column("Pokemon_Number", anchor=CENTER, width=120)
+    my_tree.column("Pokemon_Name", anchor=W, width=120)
+    my_tree.column("move1", anchor=W, width=60)
+    my_tree.column("move2", anchor=W, width=60)
+    my_tree.column("move3", anchor=W, width=60)
+    my_tree.column("move4", anchor=W, width=60)
+    my_tree.column("move5", anchor=W, width=60)
+    my_tree.column("move6", anchor=W, width=60)
+    my_tree.column("move7", anchor=W, width=60)
+    my_tree.column("move8", anchor=W, width=60)
+    my_tree.column("move9", anchor=W, width=60)
+   
+
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("Pokemon_Number", text = "Pokemon_Number", anchor=W)
+    my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
+    my_tree.heading("move1", text = "move1", anchor=W)
+    my_tree.heading("move2", text = "move2", anchor=W)
+    my_tree.heading("move3", text = "move3", anchor=W)
+    my_tree.heading("move4", text = "move4", anchor=W)
+    my_tree.heading("move5", text = "move5", anchor=W)
+    my_tree.heading("move6", text = "move6", anchor=W)
+    my_tree.heading("move7", text = "move7", anchor=W)
+    my_tree.heading("move8", text = "move8", anchor=W)
+    my_tree.heading("move9", text = "move9", anchor=W)
+    
+
     try:
         sql = """SELECT pokemon.pokedex_number, pokemon.name, move1, move2, move3, move4, move5, move6, move7, move8, move9
                 FROM moveset, pokemon
@@ -607,13 +858,12 @@ def searchPokemonMoveInMoveset(conn, root, e):
         args = [abName]
         cur = conn.cursor()
         cur.execute(sql, args)
-        l = '{:<15} {:<30} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}'.format("Pokedex_Number", "Pokemon_Name", "move1", "move2", "move3", "move4", "move5", "move6", "move7", "move8", "move9")
-        print(l)
+        
         print("-------------------------------")
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<30} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}'.format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+                values =(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10]))
     except Error as e:
         conn.rollback()
         print(e)
@@ -621,7 +871,7 @@ def searchPokemonMoveInMoveset(conn, root, e):
 
 #20/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-def speedSearch(conn, root, e):
+def speedSearch(conn, my_tree, genNum):
     print("--------------------------------------------")
     #status = input("")
     try:
