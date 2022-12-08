@@ -2,10 +2,22 @@ from os import W_OK
 import sqlite3
 from sqlite3 import Error
 from tkinter import *
+from tkinter import ttk
+
 
 #1/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-def pokemonGenerationSearch(conn, root, genNum):
+def pokemonGenerationSearch(conn, root, my_tree, genNum):
     print("--------------------------------------------")
+    my_tree['columns'] = ("PokedexNumber", "PokemonName", "Generation")
+    my_tree.column("#0", width=10)
+    my_tree.column("PokedexNumber", anchor=CENTER, width=120)
+    my_tree.column("PokemonName", anchor=W, width=120)
+    my_tree.column("Generation", anchor=W, width=120)
+    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("PokedexNumber", text = "PokedexNumber", anchor=W)
+    my_tree.heading("PokemonName", text = "PokemonName", anchor=W)
+    my_tree.heading("Generation", text = "Generation", anchor=W)
+
     try:
         sql = """SELECT pokedex_number, name as pokemon_name, generation
                 FROM pokemon
@@ -13,13 +25,14 @@ def pokemonGenerationSearch(conn, root, genNum):
         args = [genNum]
         cur = conn.cursor()
         cur.execute(sql, args)
-        l = '{:<15} {:<25} {:<10}'.format("PokedexNumber", "PokemonName", "Generation")
-        print(l)
+        # l = '{:<15} {:<25} {:<10}'.format("PokedexNumber", "PokemonName", "Generation")
+        # print(l)
         print("-------------------------------")
         rows = cur.fetchall()
-        for row in rows:
-            l = '{:<15} {:<25} {:<10}'.format(row[0], row[1], row[2])
-            print(l)
+        for row in rows: 
+            my_tree.insert("", 'end', text="",
+               values =(row[0],row[1],row[2]))
+        
     except Error as e:
         conn.rollback()
         print(e)

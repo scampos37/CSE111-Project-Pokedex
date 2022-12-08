@@ -3,6 +3,7 @@ import sqlite3
 from sqlite3 import Error
 import sqlFunctions
 from tkinter import *
+from tkinter import ttk
 
 root = Tk()
 root.title('Pokedex - World of Pokemon')
@@ -14,6 +15,7 @@ Q11,Q12,Q13,Q14 =Label(root),Label(root),Label(root),Label(root)
 e1,e2,e3,e4,e5 = Entry(root),Entry(root),Entry(root),Entry(root),Entry(root)
 e6,e7,e8,e9,e10 = Entry(root),Entry(root),Entry(root),Entry(root),Entry(root)
 e11,e12,e13,e14 =Entry(root),Entry(root),Entry(root),Entry(root)
+my_tree = ttk.Treeview(root)
 
 cstring = ""
 
@@ -165,7 +167,7 @@ def main():
         print(content)
         print(clicked.get())
         if clicked.get() == questions[0]:
-            sqlFunctions.pokemonGenerationSearch(conn, root, content)
+            sqlFunctions.pokemonGenerationSearch(conn, root, my_tree, content)
         if clicked.get() == questions[1]:
             x = content
             if (x == "name"):
@@ -216,8 +218,12 @@ def main():
     def search(conn):
         global Q1, Q2, Q3, Q4
         global e1, e2, e3, e4
+        global my_tree
         Q1.destroy(), Q2.destroy(), Q3.destroy(), Q4.destroy()
         e1.destroy(), e2.destroy(), e3.destroy(), e4.destroy()
+        my_tree.destroy()
+        my_tree = ttk.Treeview(root)
+        my_tree.grid(row=9, column=0, columnspan=5)
         cstring = str(clicked.get())
         e1 = Entry(root, width=50)
         e1.grid(row=2, column=0, columnspan=2)
