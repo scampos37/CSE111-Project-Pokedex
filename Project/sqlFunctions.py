@@ -12,7 +12,7 @@ def pokemonGenerationSearch(conn, my_tree, genNum):
     my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
     my_tree.column("Pokemon_Name", anchor=W, width=120)
     my_tree.column("Generation", anchor=W, width=120)
-    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("#0", anchor=W)
     my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
     my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
     my_tree.heading("Generation", text = "Generation", anchor=W)
@@ -106,7 +106,7 @@ def pokeTypeSearch(conn, my_tree, e):
         my_tree.column("Pokedex_Number", anchor=CENTER, width=120)
         my_tree.column("Pokemon_Name", anchor=W, width=120)
         my_tree.column("Type_1", anchor=W, width=120)
-        my_tree.heading("#0", text = "List", anchor=W)
+        my_tree.heading("#0", anchor=W)
         my_tree.heading("Pokedex_Number", text = "Pokedex_Number", anchor=W)
         my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
         my_tree.heading("Type_1", text = "Type_1", anchor=W)
@@ -687,7 +687,7 @@ def generationTypingsCount(conn, my_tree, e):
             my_tree.column("Defense_Type1", anchor=W, width=120)
             my_tree.column("Defense_Type2", anchor=W, width=120)
 
-            my_tree.heading("#0", text = "List", anchor=W)
+            my_tree.heading("#0", anchor=W)
             my_tree.heading("Generation", text = "Generation", anchor=W)
             my_tree.heading("Type_Count", text = "Type_Count", anchor=W)
             my_tree.heading("Defense_Type1", text = "Defense_Type1", anchor=W)
@@ -833,7 +833,7 @@ def searchPokemonMoveInMoveset(conn, my_tree, e):
     my_tree.column("move9", anchor=W, width=80)
    
 
-    my_tree.heading("#0", text = "List", anchor=W)
+    my_tree.heading("#0", anchor=W)
     my_tree.heading("Pokemon_Number", text = "Pokemon_Number", anchor=W)
     my_tree.heading("Pokemon_Name", text = "Pokemon_Name", anchor=W)
     my_tree.heading("move1", text = "move1", anchor=W)

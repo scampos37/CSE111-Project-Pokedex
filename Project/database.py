@@ -15,6 +15,12 @@ Q11,Q12,Q13,Q14 =Label(root),Label(root),Label(root),Label(root)
 e1,e2,e3,e4,e5 = Entry(root),Entry(root),Entry(root),Entry(root),Entry(root)
 e6,e7,e8,e9,e10 = Entry(root),Entry(root),Entry(root),Entry(root),Entry(root)
 e11,e12,e13,e14 =Entry(root),Entry(root),Entry(root),Entry(root)
+
+style = ttk.Style()
+style.theme_use('default')
+style.configure("Treeview", background="#D3D3D3", foreground="black", rowheight=25, fieldbackground="#D3D3D3")
+style.map('Treeview', background=[('selected', "#347083")])
+
 my_tree = ttk.Treeview(root)
 
 cstring = ""
@@ -272,7 +278,7 @@ def main():
         e1.grid(row=2, column=0, columnspan=2)
         if cstring == questions[0]:
             Q1 = Label(root, text = "What generation are you looking for: ")
-            Q1.grid(row=1,column=0, columnspan=5)
+            Q1.grid(row=1,column=0, columnspan=5, padx=10, pady=10)
             
             root.bind('<Return>', process)
             
