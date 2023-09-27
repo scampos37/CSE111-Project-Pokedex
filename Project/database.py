@@ -390,7 +390,7 @@ def main():
     
 
 
-    database = r"pokedex.sqlite"
+    database = r"Project/pokedex.sqlite"
 
     conn = openConnection(database)
 
