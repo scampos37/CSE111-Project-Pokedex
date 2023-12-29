@@ -171,18 +171,17 @@ def main():
     def process(event=None):
         global my_tree
         my_tree.destroy()
-        content = e1.get() # get the contents of the entry widget
-        if content == "12345":
+# get the contents of the entry widget
+        if (content := e1.get()) == "12345":
             print("Password Correct")
-            ques = input("""Which command do you want to run
+            if (ques := input("""Which command do you want to run
             1.) Insert Pokemon
             2.) Update Pokemon Name
             3.) Delete Pokemon
             4.) insert basestat
             5.) delete basestat
             6.) update basestats
-            7.) update moveset\n""")
-            if ques == "1":
+            7.) update moveset\n""")) == "1":
                 sqlFunctions.insertPokemon(conn)
             if ques == "2":
                 sqlFunctions.updatePokemonName(conn)
